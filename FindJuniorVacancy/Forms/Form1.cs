@@ -9,7 +9,6 @@ namespace FindJuniorVacancy
     public partial class Form1 : Form
     {
         private WebsiteManager websiteManager = new WebsiteManager();
-        List<Job> jobs = new List<Job>();
         public Form1()
         {
             InitializeComponent();
@@ -17,10 +16,6 @@ namespace FindJuniorVacancy
 
         private void btn_FindJobs_Click(object sender, EventArgs e)
         {
-            foreach(var website in websiteManager.GetWebsites())
-            {
-                jobs.AddRange(ScrapData(website.Url, website.Domain, website.ContainerSelector, website.ItemSelector, website.JobTitleSelector, website.CompanyNameSelector, website.SalarySelector, website.UrlSelector));
-            }
         }
 
         private HtmlNodeCollection GetHtmlNodeCollection(string url, string containerSelector, string itemSelector)
@@ -76,15 +71,40 @@ namespace FindJuniorVacancy
         {
             HtmlNodeCollection articleNodes = GetHtmlNodeCollection(url, containerSelector, itemSelector);
 
+            List<Job> jobs = new List<Job>();
             foreach (HtmlNode node in articleNodes)
             {
+                string jobTitle = "none";
+                HtmlNode jobTitleNode = node.SelectSingleNode(jobTitleSelector);
+                if (jobTitleNode != null && !string.IsNullOrWhiteSpace(jobTitleNode.InnerText))
+                {
+                    jobTitle = jobTitleNode.InnerText.Trim();
+                }
+
+                string companyName = "none";
+                HtmlNode companyNameNode = node.SelectSingleNode(companyNameSelector);
+                if (companyNameNode != null && !string.IsNullOrWhiteSpace(companyNameNode.InnerText))
+                {
+                    companyName = companyNameNode.InnerText.Trim();
+                }
+
+                string salary = "none";
+                HtmlNode salaryNode = node.SelectSingleNode(salarySelector);
+                if (salaryNode != null && !string.IsNullOrWhiteSpace(salaryNode.InnerText))
+                {
+                    salary = salaryNode.InnerText.Trim();
+                }
+
+                string pageUrl = domain + (node.SelectSingleNode(urlSelector)?.Attributes["href"]?.Value ?? "none");
+
                 Job job = new Job
                 {
-                    JobTitle = node.SelectSingleNode(jobTitleSelector).InnerText.Trim(),
-                    CompanyName = node.SelectSingleNode(companyNameSelector).InnerText.Trim(),
-                    Salary = node.SelectSingleNode(salarySelector).InnerText.Trim(),
-                    Url = domain + node.SelectSingleNode(urlSelector).Attributes["href"].Value,
+                    JobTitle = jobTitle,
+                    CompanyName = companyName,
+                    Salary = salary,
+                    Url = pageUrl
                 };
+
                 jobs.Add(job);
             }
             return jobs;
@@ -92,11 +112,14 @@ namespace FindJuniorVacancy
 
         private void btn_ShowJobs_Click(object sender, EventArgs e)
         {
+            List<Job> allJobs = new List<Job>();
+
             foreach (var website in websiteManager.GetWebsites())
             {
-                jobs.AddRange(ScrapData(website.Url, website.Domain, website.ContainerSelector, website.ItemSelector, website.JobTitleSelector, website.CompanyNameSelector, website.SalarySelector, website.UrlSelector));
+                List<Job> websiteJob = ScrapData(website.Url, website.Domain, website.ContainerSelector, website.ItemSelector, website.JobTitleSelector, website.CompanyNameSelector, website.SalarySelector, website.UrlSelector);
+                allJobs.AddRange(websiteJob);
             }
-            ShowData showData = new ShowData(jobs);
+            ShowData showData = new ShowData(allJobs);
             showData.Show();
         }
 

@@ -15,7 +15,7 @@ namespace FindJuniorVacancy.Classes
         public string ItemSelector { get; set; }
         public string JobTitleSelector { get; set; }
         public string CompanyNameSelector { get; set; }
-        public string SalarySelector {  get; set; }
+        public string? SalarySelector {  get; set; }
         public string UrlSelector {  get; set; }
 
     }

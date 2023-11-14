@@ -30,7 +30,18 @@ namespace FindJuniorVacancy.Classes
                 CompanyNameSelector = ".//div[contains(@class, 'vacancy-item__column')]/a",
                 SalarySelector = ".//span[contains(@class, 'vacancy-item__salary-label')]",
                 UrlSelector = ".//a[contains(@class, 'vacancy-item')]"
-            }
+            },
+            new Website
+            {
+                Domain = "https://www.visidarbi.lv",
+                Url = "https://www.visidarbi.lv/darba-sludinajumi?keywords=c%23%2C+.net%2C+java%2C+php%2C+programm%C4%93t%C4%81js%2C+developer&categories=6#results",
+                ContainerSelector = "//div[contains(@class, 'list')]",
+                ItemSelector = ".//div[contains(@class, 'item')]",
+                JobTitleSelector = ".//div[contains(@class, 'title')]",
+                CompanyNameSelector = ".//li[contains(@class, 'company')]",
+                SalarySelector = ".//li[contains(@class, 'salary')]/span",
+                UrlSelector = ".//a[contains(@class, 'image')]"
+            },
         };
 
             return configurations;

@@ -40,6 +40,7 @@
             btn_FindJobs.TabIndex = 0;
             btn_FindJobs.Text = "Find Jobs";
             btn_FindJobs.UseVisualStyleBackColor = true;
+            btn_FindJobs.Click += btn_FindJobs_Click;
             // 
             // btn_ShowJobs
             // 

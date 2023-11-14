@@ -13,16 +13,16 @@ namespace FindJuniorVacancy.Forms
 {
     public partial class ShowData : Form
     {
-        public ShowData()
+        private List<Job> jobsToShow;
+        public ShowData(List<Job> jobs)
         {
             InitializeComponent();
+            this.jobsToShow = jobs;
         }
 
         private void ShowData_Load(object sender, EventArgs e)
         {
-            Form1 form1 = new Form1();
-            List<Job> jobs = form1.ScrapData();
-            dgv_ShowData.DataSource = jobs;
+            dgv_ShowData.DataSource = jobsToShow;
         }
     }
 }

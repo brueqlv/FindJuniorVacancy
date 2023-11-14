@@ -61,6 +61,7 @@
             Controls.Add(btn_FindJobs);
             Name = "Form1";
             Text = "JobFinder";
+            Load += Form1_Load;
             ResumeLayout(false);
         }
 

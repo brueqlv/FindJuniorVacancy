@@ -8,7 +8,7 @@ namespace FindJuniorVacancy
 {
     public partial class Form1 : Form
     {
-        private string Domain { get { return "https://www.CV.lv"; } }
+        private WebsiteManager websiteManager = new WebsiteManager();
         List<Job> jobs = new List<Job>();
         public Form1()
         {
@@ -17,10 +17,13 @@ namespace FindJuniorVacancy
 
         private void btn_FindJobs_Click(object sender, EventArgs e)
         {
-            ScrapData();
+            foreach(var website in websiteManager.GetWebsites())
+            {
+                jobs.AddRange(ScrapData(website.Url, website.Domain, website.ContainerSelector, website.ItemSelector, website.JobTitleSelector, website.CompanyNameSelector, website.SalarySelector, website.UrlSelector));
+            }
         }
 
-        private HtmlNodeCollection GetHtmlNodeCollection(string url)
+        private HtmlNodeCollection GetHtmlNodeCollection(string url, string containerSelector, string itemSelector)
         {
             try
             {
@@ -31,13 +34,13 @@ namespace FindJuniorVacancy
                 {
                     HtmlNodeCollection liNodes = new HtmlNodeCollection(null); // Initialize an empty HtmlNodeCollection
 
-                    HtmlNodeCollection ulNodes = doc.DocumentNode.SelectNodes("//ul[contains(@class, 'vacancies-list')]");
+                    HtmlNodeCollection ulNodes = doc.DocumentNode.SelectNodes(containerSelector);
 
                     if (ulNodes != null)
                     {
                         foreach (HtmlNode ulNode in ulNodes)
                         {
-                            HtmlNodeCollection liElements = ulNode.SelectNodes("./li");
+                            HtmlNodeCollection liElements = ulNode.SelectNodes(itemSelector);
 
                             if (liElements != null)
                             {
@@ -69,19 +72,18 @@ namespace FindJuniorVacancy
             return null;
         }
 
-        public List<Job> ScrapData()
+        public List<Job> ScrapData(string url, string domain, string containerSelector, string itemSelector, string jobTitleSelector, string companyNameSelector, string salarySelector, string urlSelector)
         {
-            string url = "https://cv.lv/lv/search?limit=20&offset=0&categories%5B0%5D=INFORMATION_TECHNOLOGY&fuzzy=true&suitableForRefugees=false&isHourlySalary=false&isRemoteWork=false&isQuickApply=false";
-            HtmlNodeCollection articleNodes = GetHtmlNodeCollection(url);
+            HtmlNodeCollection articleNodes = GetHtmlNodeCollection(url, containerSelector, itemSelector);
 
             foreach (HtmlNode node in articleNodes)
             {
                 Job job = new Job
                 {
-                    JobTitle = node.SelectSingleNode(".//span[contains(@class, 'vacancy-item__title')]").InnerText.Trim(),
-                    CompanyName = node.SelectSingleNode(".//div[contains(@class, 'vacancy-item__column')]/a").InnerText.Trim(),
-                    Salary = node.SelectSingleNode(".//span[contains(@class, 'vacancy-item__salary-label')]").InnerText.Trim(),
-                    Url = Domain + node.SelectSingleNode(".//a[contains(@class, 'vacancy-item')]").Attributes["href"].Value,
+                    JobTitle = node.SelectSingleNode(jobTitleSelector).InnerText.Trim(),
+                    CompanyName = node.SelectSingleNode(companyNameSelector).InnerText.Trim(),
+                    Salary = node.SelectSingleNode(salarySelector).InnerText.Trim(),
+                    Url = domain + node.SelectSingleNode(urlSelector).Attributes["href"].Value,
                 };
                 jobs.Add(job);
             }
@@ -90,8 +92,17 @@ namespace FindJuniorVacancy
 
         private void btn_ShowJobs_Click(object sender, EventArgs e)
         {
-            ShowData showData = new ShowData();
+            foreach (var website in websiteManager.GetWebsites())
+            {
+                jobs.AddRange(ScrapData(website.Url, website.Domain, website.ContainerSelector, website.ItemSelector, website.JobTitleSelector, website.CompanyNameSelector, website.SalarySelector, website.UrlSelector));
+            }
+            ShowData showData = new ShowData(jobs);
             showData.Show();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

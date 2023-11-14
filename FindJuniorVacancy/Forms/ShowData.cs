@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FindJuniorVacancy.Classes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,6 +23,11 @@ namespace FindJuniorVacancy.Forms
 
         }
 
-
+        private void ShowData_Load(object sender, EventArgs e)
+        {
+            Form1 form1 = new Form1();
+            List<Job> jobs = form1.ScrapData();
+            dgv_ShowData.DataSource = jobs;
+        }
     }
 }

@@ -1,4 +1,5 @@
 using FindJuniorVacancy.Classes;
+using FindJuniorVacancy.Forms;
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
@@ -68,7 +69,7 @@ namespace FindJuniorVacancy
             return null;
         }
 
-        public void ScrapData()
+        public List<Job> ScrapData()
         {
             string url = "https://cv.lv/lv/search?limit=20&offset=0&categories%5B0%5D=INFORMATION_TECHNOLOGY&fuzzy=true&suitableForRefugees=false&isHourlySalary=false&isRemoteWork=false&isQuickApply=false";
             HtmlNodeCollection articleNodes = GetHtmlNodeCollection(url);
@@ -85,13 +86,13 @@ namespace FindJuniorVacancy
                 };
                 jobs.Add(job);
             }
-
-            foreach (Job job in jobs)
-            {
-                MessageBox.Show($"Job Title: {job.JobTitle}. Company Name: {job.CompanyName}. Salary: {job.Salary}. Url: {job.Url}");
-            }
+            return jobs;
         }
 
-
+        private void btn_ShowJobs_Click(object sender, EventArgs e)
+        {
+            ShowData showData = new ShowData();
+            showData.Show();
+        }
     }
 }

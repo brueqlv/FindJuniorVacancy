@@ -50,6 +50,7 @@
             btn_ShowJobs.TabIndex = 1;
             btn_ShowJobs.Text = "Show Jobs";
             btn_ShowJobs.UseVisualStyleBackColor = true;
+            btn_ShowJobs.Click += btn_ShowJobs_Click;
             // 
             // Form1
             // 

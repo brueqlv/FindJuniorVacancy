@@ -41,7 +41,6 @@
             dgv_ShowData.RowTemplate.Height = 41;
             dgv_ShowData.Size = new Size(1428, 622);
             dgv_ShowData.TabIndex = 0;
-            dgv_ShowData.CellContentClick += dgv_ShowData_CellContentClick;
             // 
             // ShowData
             // 

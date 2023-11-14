@@ -18,11 +18,6 @@ namespace FindJuniorVacancy.Forms
             InitializeComponent();
         }
 
-        private void dgv_ShowData_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
         private void ShowData_Load(object sender, EventArgs e)
         {
             Form1 form1 = new Form1();

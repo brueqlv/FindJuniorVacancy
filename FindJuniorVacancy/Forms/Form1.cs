@@ -76,7 +76,6 @@ namespace FindJuniorVacancy
 
             foreach (HtmlNode node in articleNodes)
             {
-                HtmlNode spanNode = node.SelectSingleNode(".//span[contains(@class, 'vacancy-item__title')]");
                 Job job = new Job
                 {
                     JobTitle = node.SelectSingleNode(".//span[contains(@class, 'vacancy-item__title')]").InnerText.Trim(),

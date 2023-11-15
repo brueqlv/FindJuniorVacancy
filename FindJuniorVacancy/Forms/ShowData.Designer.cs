@@ -31,6 +31,7 @@
             dgv_ShowData = new DataGridView();
             txt_FilterName = new TextBox();
             btn_Filter = new Button();
+            btn_submit = new Button();
             ((System.ComponentModel.ISupportInitialize)dgv_ShowData).BeginInit();
             SuspendLayout();
             // 
@@ -61,11 +62,22 @@
             btn_Filter.UseVisualStyleBackColor = true;
             btn_Filter.Click += btn_Filter_Click;
             // 
+            // btn_submit
+            // 
+            btn_submit.Location = new Point(612, 31);
+            btn_submit.Name = "btn_submit";
+            btn_submit.Size = new Size(269, 46);
+            btn_submit.TabIndex = 3;
+            btn_submit.Text = "Save favorites";
+            btn_submit.UseVisualStyleBackColor = true;
+            btn_submit.Click += btn_submit_Click;
+            // 
             // ShowData
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1447, 735);
+            Controls.Add(btn_submit);
             Controls.Add(btn_Filter);
             Controls.Add(txt_FilterName);
             Controls.Add(dgv_ShowData);
@@ -82,5 +94,6 @@
         private DataGridView dgv_ShowData;
         private TextBox txt_FilterName;
         private Button btn_Filter;
+        private Button btn_submit;
     }
 }

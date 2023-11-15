@@ -64,7 +64,7 @@
             // 
             // btn_submit
             // 
-            btn_submit.Location = new Point(612, 31);
+            btn_submit.Location = new Point(607, 28);
             btn_submit.Name = "btn_submit";
             btn_submit.Size = new Size(269, 46);
             btn_submit.TabIndex = 3;

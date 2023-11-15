@@ -32,11 +32,14 @@
             txt_FilterName = new TextBox();
             btn_Filter = new Button();
             btn_submit = new Button();
+            btn_LoadAll = new Button();
+            btn_LoadFavorites = new Button();
             ((System.ComponentModel.ISupportInitialize)dgv_ShowData).BeginInit();
             SuspendLayout();
             // 
             // dgv_ShowData
             // 
+            dgv_ShowData.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgv_ShowData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgv_ShowData.Location = new Point(-2, 101);
             dgv_ShowData.Name = "dgv_ShowData";
@@ -47,14 +50,14 @@
             // 
             // txt_FilterName
             // 
-            txt_FilterName.Location = new Point(26, 35);
+            txt_FilterName.Location = new Point(574, 32);
             txt_FilterName.Name = "txt_FilterName";
             txt_FilterName.Size = new Size(361, 39);
             txt_FilterName.TabIndex = 1;
             // 
             // btn_Filter
             // 
-            btn_Filter.Location = new Point(423, 28);
+            btn_Filter.Location = new Point(972, 28);
             btn_Filter.Name = "btn_Filter";
             btn_Filter.Size = new Size(150, 46);
             btn_Filter.TabIndex = 2;
@@ -64,7 +67,7 @@
             // 
             // btn_submit
             // 
-            btn_submit.Location = new Point(607, 28);
+            btn_submit.Location = new Point(1157, 28);
             btn_submit.Name = "btn_submit";
             btn_submit.Size = new Size(269, 46);
             btn_submit.TabIndex = 3;
@@ -72,11 +75,33 @@
             btn_submit.UseVisualStyleBackColor = true;
             btn_submit.Click += btn_submit_Click;
             // 
+            // btn_LoadAll
+            // 
+            btn_LoadAll.Location = new Point(43, 31);
+            btn_LoadAll.Name = "btn_LoadAll";
+            btn_LoadAll.Size = new Size(209, 46);
+            btn_LoadAll.TabIndex = 4;
+            btn_LoadAll.Text = "Load All Jobs";
+            btn_LoadAll.UseVisualStyleBackColor = true;
+            btn_LoadAll.Click += btn_LoadAll_Click;
+            // 
+            // btn_LoadFavorites
+            // 
+            btn_LoadFavorites.Location = new Point(284, 32);
+            btn_LoadFavorites.Name = "btn_LoadFavorites";
+            btn_LoadFavorites.Size = new Size(203, 46);
+            btn_LoadFavorites.TabIndex = 5;
+            btn_LoadFavorites.Text = "Load Favorites";
+            btn_LoadFavorites.UseVisualStyleBackColor = true;
+            btn_LoadFavorites.Click += btn_LoadFavorites_Click;
+            // 
             // ShowData
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1447, 735);
+            Controls.Add(btn_LoadFavorites);
+            Controls.Add(btn_LoadAll);
             Controls.Add(btn_submit);
             Controls.Add(btn_Filter);
             Controls.Add(txt_FilterName);
@@ -95,5 +120,7 @@
         private TextBox txt_FilterName;
         private Button btn_Filter;
         private Button btn_submit;
+        private Button btn_LoadAll;
+        private Button btn_LoadFavorites;
     }
 }

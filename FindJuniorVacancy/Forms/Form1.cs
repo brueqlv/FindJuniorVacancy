@@ -18,6 +18,8 @@ namespace FindJuniorVacancy
         {
         }
 
+
+       
         private void btn_ShowJobs_Click(object sender, EventArgs e)
         {
             JobScrapperService scraperService = new JobScrapperService();

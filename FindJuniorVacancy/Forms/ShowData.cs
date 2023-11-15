@@ -37,7 +37,6 @@ namespace FindJuniorVacancy.Forms
 
         private void ShowData_Load(object sender, EventArgs e)
         {
-            dgv_ShowData.DataSource = jobsToShow;
         }
 
         private void btn_Filter_Click(object sender, EventArgs e)
@@ -61,6 +60,11 @@ namespace FindJuniorVacancy.Forms
         }
         private void btn_submit_Click(object sender, EventArgs e)
         {
+            SaveJobsToServer(SaveFavoritesToList());
+
+        }
+        private List<Job> SaveFavoritesToList()
+        {
             List<Job> selectedJobs = new List<Job>();
 
             foreach (DataGridViewRow row in dgv_ShowData.Rows)
@@ -72,19 +76,22 @@ namespace FindJuniorVacancy.Forms
                     selectedJobs.Add((Job)row.DataBoundItem);
                 }
             }
-
-            string connectionString = "Server=GUNDARSPC;Database=FavoriteJobs;Integrated Security=true;";
-            DatabaseConnector dbConnector = new DatabaseConnector(connectionString);
+            return selectedJobs;
+        }
+        private void SaveJobsToServer(List<Job> selectedJobs)
+        {
+            
+            DatabaseConnector dbConnector = new DatabaseConnector();
 
             try
             {
                 dbConnector.OpenConnection();
 
-                foreach(Job job in selectedJobs)
+                foreach (Job job in selectedJobs)
                 {
                     string query = $"INSERT INTO FavoriteJobs (JobTitle, CompanyName, Salary, JobUrl) VALUES ('{job.JobTitle.Replace("'", "''")}', '{job.CompanyName.Replace("'", "''")}', '{job.Salary.Replace("'", "''")}', '{job.Url.Replace("'", "''")}')";
 
-                    using(SqlCommand command = new SqlCommand(query, dbConnector.Connection))
+                    using (SqlCommand command = new SqlCommand(query, dbConnector.Connection))
                     {
                         command.ExecuteNonQuery(); // Execute SQL command to insert the job into the database
 
@@ -103,7 +110,22 @@ namespace FindJuniorVacancy.Forms
                 dbConnector.CloseConnection(); // Close the database connection
             }
 
+        }
+
+        private void btn_LoadAll_Click(object sender, EventArgs e)
+        {
+            dgv_ShowData.DataSource = jobsToShow;
+        }
+
+        private void btn_LoadFavorites_Click(object sender, EventArgs e)
+        {
+            dgv_ShowData.DataSource = null;
+            dgv_ShowData.Rows.Clear();
+            DatabaseConnector dbConnector = new DatabaseConnector();
+            List<Job> jobs = dbConnector.LoadDataToGridView();
+            dgv_ShowData.DataSource = jobs;
 
         }
+
     }
 }

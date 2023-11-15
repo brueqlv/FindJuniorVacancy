@@ -23,7 +23,7 @@ namespace FindJuniorVacancy.Classes
             new Website
             {
                 Domain = "https://www.CV.lv",
-                Url = "https://cv.lv/lv/search?limit=20&offset=0&categories%5B0%5D=INFORMATION_TECHNOLOGY&fuzzy=true&suitableForRefugees=false&isHourlySalary=false&isRemoteWork=false&isQuickApply=false",
+                Url = "https://cv.lv/lv/search?limit=500&offset=0&categories%5B0%5D=INFORMATION_TECHNOLOGY&fuzzy=true&suitableForRefugees=false&isHourlySalary=false&isRemoteWork=false&isQuickApply=false",
                 ContainerSelector = "//ul[contains(@class, 'vacancies-list')]",
                 ItemSelector = "./li",
                 JobTitleSelector = ".//span[contains(@class, 'vacancy-item__title')]",
@@ -34,13 +34,13 @@ namespace FindJuniorVacancy.Classes
             new Website
             {
                 Domain = "https://www.visidarbi.lv",
-                Url = "https://www.visidarbi.lv/darba-sludinajumi?keywords=c%23%2C+.net%2C+java%2C+php%2C+programm%C4%93t%C4%81js%2C+developer&categories=6#results",
+                Url = "https://www.visidarbi.lv/darba-sludinajumi?keywords=c%23%2C+.net%2C+java%2C+php%2C+programm%3Ft%3Fjs%2C+developer&categories=6&page=1#results",
                 ContainerSelector = "//div[contains(@class, 'list')]",
                 ItemSelector = ".//div[contains(@class, 'item')]",
                 JobTitleSelector = ".//div[contains(@class, 'title')]",
                 CompanyNameSelector = ".//li[contains(@class, 'company')]",
                 SalarySelector = ".//li[contains(@class, 'salary')]/span",
-                UrlSelector = ".//a[contains(@class, 'image')]"
+                UrlSelector = ".//a[contains(@class, 'image')]",
             },
         };
 

@@ -23,7 +23,6 @@ namespace FindJuniorVacancy.Classes
         private List<Job> ScrapeWebsiteJobs(Website website)
         {
             List<Job> jobs = new List<Job>();
-
             try
             {
                 HtmlWeb web = new HtmlWeb();
@@ -35,7 +34,7 @@ namespace FindJuniorVacancy.Classes
 
                     HtmlNodeCollection ulNodes = doc.DocumentNode.SelectNodes(website.ContainerSelector);
 
-                    if(ulNodes != null)
+                    if (ulNodes != null)
                     {
                         foreach (HtmlNode ulNode in ulNodes)
                         {
@@ -51,18 +50,14 @@ namespace FindJuniorVacancy.Classes
                             }
                         }
                     }
-
-
                     else
                     {
                         Console.WriteLine($"No items found using selector: {website.ContainerSelector}");
-
                     }
                 }
                 else
                 {
                     Console.WriteLine("HTML document is null.");
-
                 }
             }
             catch (Exception ex)

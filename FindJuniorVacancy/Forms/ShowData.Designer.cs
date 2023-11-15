@@ -29,34 +29,58 @@
         private void InitializeComponent()
         {
             dgv_ShowData = new DataGridView();
+            txt_FilterName = new TextBox();
+            btn_Filter = new Button();
             ((System.ComponentModel.ISupportInitialize)dgv_ShowData).BeginInit();
             SuspendLayout();
             // 
             // dgv_ShowData
             // 
             dgv_ShowData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgv_ShowData.Location = new Point(7, 7);
+            dgv_ShowData.Location = new Point(-2, 101);
             dgv_ShowData.Name = "dgv_ShowData";
             dgv_ShowData.RowHeadersWidth = 82;
             dgv_ShowData.RowTemplate.Height = 41;
             dgv_ShowData.Size = new Size(1428, 622);
             dgv_ShowData.TabIndex = 0;
             // 
+            // txt_FilterName
+            // 
+            txt_FilterName.Location = new Point(26, 35);
+            txt_FilterName.Name = "txt_FilterName";
+            txt_FilterName.Size = new Size(361, 39);
+            txt_FilterName.TabIndex = 1;
+            // 
+            // btn_Filter
+            // 
+            btn_Filter.Location = new Point(423, 28);
+            btn_Filter.Name = "btn_Filter";
+            btn_Filter.Size = new Size(150, 46);
+            btn_Filter.TabIndex = 2;
+            btn_Filter.Text = "Filter";
+            btn_Filter.UseVisualStyleBackColor = true;
+            btn_Filter.Click += btn_Filter_Click;
+            // 
             // ShowData
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1447, 735);
+            Controls.Add(btn_Filter);
+            Controls.Add(txt_FilterName);
             Controls.Add(dgv_ShowData);
             Name = "ShowData";
             Text = "ShowData";
             Load += ShowData_Load;
             ((System.ComponentModel.ISupportInitialize)dgv_ShowData).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private DataGridView dgv_ShowData;
+        private TextBox txt_FilterName;
+        private Button btn_Filter;
     }
 }

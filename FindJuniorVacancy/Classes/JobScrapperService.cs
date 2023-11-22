@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace FindJuniorVacancy.Classes
 {
@@ -42,11 +43,18 @@ namespace FindJuniorVacancy.Classes
 
                             if (liElements != null)
                             {
-                                foreach (HtmlNode liElement in liElements)
+                                HtmlNode dataPageNode = doc.DocumentNode.SelectSingleNode("//a[contains(@data-page)]");
+
+                                string pa = ulNode.GetAttributeValue(website.PageCountSelector, "");
+                                for (int i = 1; i <= 5; i++)
                                 {
-                                    Job job = ExtractJobDetailsFromNode(liElement, website);
-                                    jobs.Add(job);
+                                    foreach (HtmlNode liElement in liElements)
+                                    {
+                                        Job job = ExtractJobDetailsFromNode(liElement, website);
+                                        jobs.Add(job);
+                                    }
                                 }
+
                             }
                         }
                     }
@@ -54,7 +62,9 @@ namespace FindJuniorVacancy.Classes
                     {
                         Console.WriteLine($"No items found using selector: {website.ContainerSelector}");
                     }
+
                 }
+
                 else
                 {
                     Console.WriteLine("HTML document is null.");
@@ -79,7 +89,8 @@ namespace FindJuniorVacancy.Classes
                 JobTitle = jobTitle,
                 CompanyName = companyName,
                 Salary = salary,
-                Url = pageUrl
+                Url = pageUrl,
+                IsFavorite = 0,
             };
         }
 

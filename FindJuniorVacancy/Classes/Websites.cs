@@ -17,7 +17,7 @@ namespace FindJuniorVacancy.Classes
         public string CompanyNameSelector { get; set; }
         public string? SalarySelector {  get; set; }
         public string UrlSelector {  get; set; }
-        public string PageCount { get; set; }
+        public string PageCountSelector { get; set; }
 
     }
 }

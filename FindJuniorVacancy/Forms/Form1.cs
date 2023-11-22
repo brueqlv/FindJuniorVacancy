@@ -16,24 +16,21 @@ namespace FindJuniorVacancy
 
         private void btn_FindJobs_Click(object sender, EventArgs e)
         {
+
+            //JobScrapperService scraperService = new JobScrapperService();
+            //List<Job> allJobs = scraperService.ScrapeJobData(websiteManager.GetWebsites());
+            //DatabaseConnector dbConnector = new DatabaseConnector();
+            //dbConnector.SaveJobsToServer(allJobs);
         }
 
 
-       
+
         private void btn_ShowJobs_Click(object sender, EventArgs e)
         {
             JobScrapperService scraperService = new JobScrapperService();
             List<Job> allJobs = scraperService.ScrapeJobData(websiteManager.GetWebsites());
-
-            if (allJobs.Any())
-            {
-                ShowData showData = new ShowData(allJobs);
-                showData.Show();
-            }
-            else
-            {
-                MessageBox.Show("No jobs found.");
-            }
+            ShowData showData = new ShowData(allJobs);
+            showData.Show();
         }
 
         private void Form1_Load(object sender, EventArgs e)

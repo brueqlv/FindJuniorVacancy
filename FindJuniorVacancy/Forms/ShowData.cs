@@ -28,7 +28,7 @@ namespace FindJuniorVacancy.Forms
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             checkBoxColumn.HeaderText = "Select";
             checkBoxColumn.Name = "checkBoxColumn";
-            dgv_ShowData.Columns.Insert(0, checkBoxColumn); // Insert the checkbox column at the beginning
+            dgv_ShowData.Columns.Insert(0, checkBoxColumn);
 
             // Bind the job list to DataGridView
             dgv_ShowData.AutoGenerateColumns = true;
@@ -43,7 +43,7 @@ namespace FindJuniorVacancy.Forms
         {
             FilterData();
         }
-        private void FilterData()
+        public void FilterData()
         {
             string filterName = txt_FilterName.Text.Trim().ToLower();
 
@@ -56,14 +56,13 @@ namespace FindJuniorVacancy.Forms
             {
                 dgv_ShowData.DataSource = jobsToShow;
             }
-
         }
         private void btn_submit_Click(object sender, EventArgs e)
         {
-            SaveJobsToServer(SaveFavoritesToList());
-
+            DatabaseConnector dbConnector = new DatabaseConnector();
+            dbConnector.SaveJobsToServer(GetSelectedJobs());
         }
-        private List<Job> SaveFavoritesToList()
+        public List<Job> GetSelectedJobs()
         {
             List<Job> selectedJobs = new List<Job>();
 
@@ -78,43 +77,14 @@ namespace FindJuniorVacancy.Forms
             }
             return selectedJobs;
         }
-        private void SaveJobsToServer(List<Job> selectedJobs)
-        {
-            
-            DatabaseConnector dbConnector = new DatabaseConnector();
 
-            try
-            {
-                dbConnector.OpenConnection();
-
-                foreach (Job job in selectedJobs)
-                {
-                    string query = $"INSERT INTO FavoriteJobs (JobTitle, CompanyName, Salary, JobUrl) VALUES ('{job.JobTitle.Replace("'", "''")}', '{job.CompanyName.Replace("'", "''")}', '{job.Salary.Replace("'", "''")}', '{job.Url.Replace("'", "''")}')";
-
-                    using (SqlCommand command = new SqlCommand(query, dbConnector.Connection))
-                    {
-                        command.ExecuteNonQuery(); // Execute SQL command to insert the job into the database
-
-                    }
-                }
-                MessageBox.Show("Selected jobs have been successfully added to the database.");
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message);
-                // Handle the database connection or insertion errors
-            }
-            finally
-            {
-                dbConnector.CloseConnection(); // Close the database connection
-            }
-
-        }
 
         private void btn_LoadAll_Click(object sender, EventArgs e)
         {
-            dgv_ShowData.DataSource = jobsToShow;
+            WebsiteManager websiteManager = new WebsiteManager();
+            JobScrapperService scraperService = new JobScrapperService();
+            List<Job> allJobs = scraperService.ScrapeJobData(websiteManager.GetWebsites());
+            dgv_ShowData.DataSource = allJobs;
         }
 
         private void btn_LoadFavorites_Click(object sender, EventArgs e)
@@ -122,10 +92,19 @@ namespace FindJuniorVacancy.Forms
             dgv_ShowData.DataSource = null;
             dgv_ShowData.Rows.Clear();
             DatabaseConnector dbConnector = new DatabaseConnector();
-            List<Job> jobs = dbConnector.LoadDataToGridView();
+            List<Job> jobs = dbConnector.LoadDataToList();
             dgv_ShowData.DataSource = jobs;
 
         }
 
+        private void btn_DeleteFromFavorites_Click(object sender, EventArgs e)
+        {
+            List<Job> selectedJobs = GetSelectedJobs();
+            List<int> selectedJobsId = selectedJobs.Select(job => job.Id).ToList();
+            DatabaseConnector dbConnector = new DatabaseConnector();
+            dbConnector.DeleteSelectedJobs(selectedJobsId);
+            List<Job> jobs = dbConnector.LoadDataToList();
+            dgv_ShowData.DataSource = jobs;
+        }
     }
 }

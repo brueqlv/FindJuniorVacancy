@@ -28,12 +28,12 @@ namespace FindJuniorVacancy.Classes
             {
                 HtmlWeb web = new HtmlWeb();
                 HtmlAgilityPack.HtmlDocument doc = web.Load(website.Url);
-
                 if (doc != null)
                 {
                     HtmlNodeCollection liNodes = new HtmlNodeCollection(null); // Initialize an empty HtmlNodeCollection
 
                     HtmlNodeCollection ulNodes = doc.DocumentNode.SelectNodes(website.ContainerSelector);
+
 
                     if (ulNodes != null)
                     {
@@ -43,18 +43,12 @@ namespace FindJuniorVacancy.Classes
 
                             if (liElements != null)
                             {
-                                HtmlNode dataPageNode = doc.DocumentNode.SelectSingleNode("//a[contains(@data-page)]");
 
-                                string pa = ulNode.GetAttributeValue(website.PageCountSelector, "");
-                                for (int i = 1; i <= 5; i++)
+                                foreach (HtmlNode liElement in liElements)
                                 {
-                                    foreach (HtmlNode liElement in liElements)
-                                    {
-                                        Job job = ExtractJobDetailsFromNode(liElement, website);
-                                        jobs.Add(job);
-                                    }
+                                    Job job = ExtractJobDetailsFromNode(liElement, website);
+                                    jobs.Add(job);
                                 }
-
                             }
                         }
                     }
@@ -62,9 +56,7 @@ namespace FindJuniorVacancy.Classes
                     {
                         Console.WriteLine($"No items found using selector: {website.ContainerSelector}");
                     }
-
                 }
-
                 else
                 {
                     Console.WriteLine("HTML document is null.");
@@ -76,7 +68,6 @@ namespace FindJuniorVacancy.Classes
             }
             return jobs;
         }
-
         private Job ExtractJobDetailsFromNode(HtmlNode node, Website website)
         {
             string jobTitle = GetInnerText(node.SelectSingleNode(website.JobTitleSelector));

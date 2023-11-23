@@ -41,7 +41,7 @@ namespace FindJuniorVacancy.Classes
                 CompanyNameSelector = ".//li[contains(@class, 'company')]",
                 SalarySelector = ".//li[contains(@class, 'salary')]/span",
                 UrlSelector = ".//a[contains(@class, 'image')]",
-                PageCountSelector = "//a[contains(@data-page)]/@data-page",
+                PageCountSelector = "//a[contains(@data-page)]",
             },
         };
 
